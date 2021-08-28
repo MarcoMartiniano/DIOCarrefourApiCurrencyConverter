@@ -14,6 +14,8 @@ import br.com.marco.dioapicurrencyconverter.databinding.ActivityMainBinding
 import br.com.marco.dioapicurrencyconverter.presentation.MainViewModel
 import br.com.marco.dioapicurrencyconverter.ui.history.HistoryActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -76,7 +78,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             val value = viewModel.state.value
             (value as? MainViewModel.State.Success)?.let {
-                val exchange = it.exchange.copy(bid = it.exchange.bid * binding.tilValue.text.toDouble())
+                val date = getCurrentDateTime()
+                val dateInString = date.toString("dd/MM/yyyy HH:mm:ss")
+                val exchange = it.exchange.copy(cotacao = it.exchange.bid, bid = it.exchange.bid * binding.tilValue.text.toDouble(),data = dateInString)
                 viewModel.saveExchange(exchange)
             }
         }
@@ -113,5 +117,14 @@ class MainActivity : AppCompatActivity() {
         val result = it.exchange.bid * binding.tilValue.text.toDouble()
 
         binding.tvResult.text = result.formatCurrency(coin.locale)
+    }
+
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
     }
 }

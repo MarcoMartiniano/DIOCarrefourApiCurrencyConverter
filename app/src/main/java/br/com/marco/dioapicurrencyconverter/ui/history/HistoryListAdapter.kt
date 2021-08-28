@@ -28,7 +28,8 @@ class HistoryListAdapter : ListAdapter<ExchangeResponseValue, HistoryListAdapter
 
         fun bind(item: ExchangeResponseValue) {
             binding.tvName.text = item.name
-
+            binding.tvCotacao.text = item.cotacao.toString()
+            binding.tvDataCotacao.text = "Data da cotação:  " + item.data
             val coin = Coin.getByName(item.codein)
             binding.tvValue.text = item.bid.formatCurrency(coin.locale)
         }
