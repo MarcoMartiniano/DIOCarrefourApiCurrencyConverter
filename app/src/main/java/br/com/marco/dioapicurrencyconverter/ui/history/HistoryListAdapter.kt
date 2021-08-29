@@ -2,15 +2,20 @@ package br.com.marco.dioapicurrencyconverter.ui.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import br.com.marco.dioapicurrencyconverter.R
 import br.com.marco.dioapicurrencyconverter.core.extensions.formatCurrency
 import br.com.marco.dioapicurrencyconverter.data.model.Coin
 import br.com.marco.dioapicurrencyconverter.data.model.ExchangeResponseValue
 import br.com.marco.dioapicurrencyconverter.databinding.ItemHistoryBinding
 
+
 class HistoryListAdapter : ListAdapter<ExchangeResponseValue, HistoryListAdapter.ViewHolder>(DiffCallback()) {
+
+    var listenerDelete : (ExchangeResponseValue) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,7 +37,25 @@ class HistoryListAdapter : ListAdapter<ExchangeResponseValue, HistoryListAdapter
             binding.tvDataCotacao.text = "Data da cotação:  " + item.data
             val coin = Coin.getByName(item.codein)
             binding.tvValue.text = item.bid.formatCurrency(coin.locale)
+            binding.ivMore.setOnClickListener {
+                showPopup(item)
+            }
         }
+
+        private fun showPopup(item: ExchangeResponseValue) {
+            val ivMore = binding.ivMore
+            val popupMenu = PopupMenu(ivMore.context, ivMore)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_delete -> listenerDelete(item)
+                }
+                return@setOnMenuItemClickListener true
+            }
+            popupMenu.show()
+        }
+
+
     }
 }
 

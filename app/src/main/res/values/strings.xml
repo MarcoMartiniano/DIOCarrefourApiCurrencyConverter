@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DioApiCurrencyConverter</string>
+    <string name="deletar_item">Deletar</string>
 </resources>

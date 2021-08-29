@@ -1,5 +1,6 @@
 package br.com.marco.dioapicurrencyconverter.domain.di
 
+import br.com.marco.dioapicurrencyconverter.domain.DeleteExchangeUseCase
 import br.com.marco.dioapicurrencyconverter.domain.GetExchangeValueUseCase
 import br.com.marco.dioapicurrencyconverter.domain.ListExchangeUseCase
 import br.com.marco.dioapicurrencyconverter.domain.SaveExchangeUseCase
@@ -18,6 +19,7 @@ object DomainModule {
             factory { ListExchangeUseCase(get()) }
             factory { SaveExchangeUseCase(get()) }
             factory { GetExchangeValueUseCase(get()) }
+            factory { DeleteExchangeUseCase(get()) }
         }
     }
 }

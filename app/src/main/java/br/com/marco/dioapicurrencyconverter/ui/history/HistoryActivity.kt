@@ -29,7 +29,7 @@ class HistoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         bindObserve()
-
+        insertListeners()
         lifecycle.addObserver(viewModel)
     }
 
@@ -50,5 +50,15 @@ class HistoryActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun insertListeners() {
+        adapter.listenerDelete = {
+            viewModel.deleteExchange(it)
+            //updateList()
+        }
+
+    }
+
+
 
 }

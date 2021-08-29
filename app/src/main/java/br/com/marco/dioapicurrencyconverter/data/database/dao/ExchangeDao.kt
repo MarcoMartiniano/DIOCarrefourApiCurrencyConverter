@@ -1,9 +1,6 @@
 package br.com.marco.dioapicurrencyconverter.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import br.com.marco.dioapicurrencyconverter.data.model.ExchangeResponseValue
 import kotlinx.coroutines.flow.Flow
 
@@ -15,4 +12,8 @@ interface ExchangeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: ExchangeResponseValue)
+
+    @Delete
+    suspend fun delete(entity: ExchangeResponseValue)
+
 }

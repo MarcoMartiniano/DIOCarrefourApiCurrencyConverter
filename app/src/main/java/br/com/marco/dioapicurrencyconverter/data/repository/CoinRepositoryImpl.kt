@@ -30,6 +30,10 @@ class CoinRepositoryImpl(
         }
     }
 
+    override suspend fun delete(exchange: ExchangeResponseValue) {
+        dao.delete(exchange)
+    }
+
     override suspend fun save(exchange: ExchangeResponseValue) {
         dao.save(exchange)
     }
